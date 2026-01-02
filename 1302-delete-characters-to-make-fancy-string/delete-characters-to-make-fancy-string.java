@@ -1,27 +1,14 @@
 class Solution {
     public String makeFancyString(String s) {
-        return helper(s, 0, new StringBuilder()).toString();
+    StringBuilder sb=new StringBuilder();
+    for(char ch:s.toCharArray()){
+        int n=sb.length();
+        if(n>=2 && sb.charAt(n-1)==ch && sb.charAt(n-2)==ch){
+            continue;
+        }
+        sb.append(ch);
     }
-
-    private StringBuilder helper(String s, int i, StringBuilder result) {
-        // base case
-        if (i == s.length()) {
-            return result;
-        }
-
-        int n = result.length();
-
-        // check last two characters
-        if (n >= 2 &&
-            result.charAt(n - 1) == s.charAt(i) &&
-            result.charAt(n - 2) == s.charAt(i)) {
-
-            // skip current character
-            return helper(s, i + 1, result);
-        }
-
-        // take current character
-        result.append(s.charAt(i));
-        return helper(s, i + 1, result);
+    return sb.toString();
     }
 }
+
