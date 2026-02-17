@@ -1,16 +1,22 @@
 class Solution {
     public int minimumCost(int[] cost) {
-        int n=cost.length;
-        int sum=0;
-        int sum2=0;
+
         Arrays.sort(cost);
-        for(int i=0;i<cost.length;i++){
-            sum+=cost[i];
+
+        int total = 0;
+        int count = 0;
+
+        // traverse from largest to smallest
+        for(int i = cost.length - 1; i >= 0; i--){
+
+            count++;
+
+            // every 3rd candy is free
+            if(count % 3 != 0){
+                total += cost[i];
+            }
         }
-        for(int j=n-3;j>=0;j-=3){
-            sum2+=cost[j];
-        }
-        int ans=sum-sum2;
-        return ans;
+
+        return total;
     }
 }
