@@ -1,14 +1,4 @@
 class Solution {
-    boolean canEatAll(int[]piles, int mid, int h){
-        int actualhours=0;
-        for(int x:piles){
-            actualhours+=x/mid;
-            if(x%mid!=0) {
-                actualhours++;
-            }
-        }
-        return actualhours<=h;
-    }
     public int minEatingSpeed(int[] piles, int h) {
         int n=piles.length;
         int left=1;
@@ -17,7 +7,6 @@ class Solution {
         for(int x : piles){
             right = Math.max(right, x);
         }
-
         while(left<right){
             int mid=left+(right-left)/2;
             if(canEatAll(piles,mid,h)){
@@ -28,4 +17,14 @@ class Solution {
             }
             return left;
         }
+         boolean canEatAll(int[]piles, int mid, int h){
+        int actualhours=0;
+        for(int x:piles){
+            actualhours+=x/mid;
+            if(x%mid!=0) {
+                actualhours++;
+            }
+        }
+        return actualhours<=h;
+    }
     }
