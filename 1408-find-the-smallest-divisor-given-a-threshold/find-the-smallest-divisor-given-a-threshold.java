@@ -1,26 +1,27 @@
 class Solution {
     public int smallestDivisor(int[] nums, int threshold) {
-        int left=1;
-        int right=0;
+        int n=nums.length;
+       int left=1;
+       int right=0;
+       for(int x:nums){
+        right=Math.max(x,right);
+       }
+       while(left<right){
+        int mid=left+(right-left)/2;
+        if(candivideall(nums,mid,threshold)){
+            right=mid;
+        }else{
+            left=mid+1;
+        }
+       }
+       return left;
+       }
+       boolean candivideall(int[]nums, int mid, int threshold){
+        int sum=0;
         for(int x:nums){
-            right=Math.max(right,x);
+            sum+=x/mid;
+            if(x%mid!=0) sum++;
         }
-        while(left<right){
-            int mid=left+(right-left)/2;
-            if (divisorgroup(nums,mid,threshold)){
-                right=mid;
-            }else{
-                left=mid+1;
-            }
-        }
-        return left;
-    }
-    boolean divisorgroup(int[] nums, int divisor, int threshold){
-        int result=0;
-        for(int x:nums){
-            result+=x/divisor;
-            if(x%divisor!=0) result++;
-        }
-        return result<=threshold;
-    }
+        return sum<=threshold;
+       }
 }
