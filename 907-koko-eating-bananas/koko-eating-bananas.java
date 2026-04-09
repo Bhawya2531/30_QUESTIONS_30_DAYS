@@ -3,28 +3,26 @@ class Solution {
         int n=piles.length;
         int left=1;
         int right=0;
-            // find max pile
-        for(int x : piles){
-            right = Math.max(right, x);
+        for(int x:piles){
+            right=Math.max(x,right);
         }
         while(left<right){
-            int mid=left+(right-left)/2;
-            if(canEatAll(piles,mid,h)){
-                right=mid;
-            }else{
-                left=mid+1;
-            }
-            }
-            return left;
+        int mid=left+(right-left)/2;
+        if(caneat(piles,h,mid)){
+            right=mid;
+        }else{// must right else nhi toh left will always change 
+        left=mid+1;
         }
-         boolean canEatAll(int[]piles, int mid, int h){
-        int actualhours=0;
-        for(int x:piles){
-            actualhours+=x/mid;
-            if(x%mid!=0) {
-                actualhours++;
-            }
         }
-        return actualhours<=h;
+        return left;
     }
-    }
+        boolean caneat(int[]piles,int h, int mid){
+            int hours=0;
+            for(int p:piles){
+            hours+=p/mid;
+            if(p%mid!=0) hours++;
+            }
+            return hours<=h;
+        }
+}
+
