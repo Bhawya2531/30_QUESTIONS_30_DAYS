@@ -10,60 +10,53 @@ class Solution {
             total = total + num;
         }
 
-        // dp[i][count][sum]
-        // Using first i elements,
-        // can we make sum
+        // dp[count][sum]
+        // Can we make sum
         // using exactly count elements?
-        boolean[][][] dp =
-                new boolean[n + 1][n + 1][total + 1];
+        boolean[][] dp =
+                new boolean[n + 1][total + 1];
 
         // Base case
-        // Using 0 elements,
-        // making sum 0
-        // with 0 picked elements
-        dp[0][0][0] = true;
+        // 0 elements -> sum 0
+        dp[0][0] = true;
 
-        // Process elements one by one
-        for (int i = 1; i <= n; i++) {
+        // Process each number
+        for (int num : nums) {
 
-            int num = nums[i - 1];
+            // BACKWARD count loop
+            for (int count = n - 1;
+                 count >= 1;
+                 count--) {
 
-            // count = how many picked
-            for (int count = 0; count <= i; count++) {
+                // BACKWARD sum loop
+                for (int sum = total;
+                     sum >= num;
+                     sum--) {
 
-                // sum = target sum
-                for (int sum = 0; sum <= total; sum++) {
+                    // TAKE logic
+                    if (dp[count - 1][sum - num] == true) {
 
-                    // ---------- NOT TAKE ----------
-
-                    dp[i][count][sum]
-                            = dp[i - 1][count][sum];
-
-                    // ---------- TAKE ----------
-
-                    if (count > 0 && sum >= num) {
-
-                        if (dp[i - 1][count - 1][sum - num] == true) {
-
-                            dp[i][count][sum] = true;
-                        }
+                        dp[count][sum] = true;
                     }
                 }
             }
         }
 
         // Try every subset size
-        for (int k = 1; k <= n / 2; k++) {
+        for (int k = 1;
+             k <= n / 2;
+             k++) {
 
             // target must be integer
             if ((total * k) % n != 0) {
                 continue;
             }
 
-            int target = (total * k) / n;
+            int target =
+                    (total * k) / n;
 
-            // Can we make target using exactly k elements?
-            if (dp[n][k][target] == true) {
+            // Check answer
+            if (dp[k][target] == true) {
                 return true;
             }
         }
@@ -71,4 +64,3 @@ class Solution {
         return false;
     }
 }
-       
