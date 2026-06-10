@@ -7,33 +7,27 @@ class Solution {
             for(int j=0;j<n;j++){
                 if(grid[i][j]=='1'){
                     islands++;
-                    bfs(i,j,grid,n,m);
+                    dfs(grid,i,j);
                 }
             }
         }
         return islands;
     }
-public void bfs(int row, int col, char[][]grid, int m, int n){
-    Queue<int[]>q=new LinkedList<>();
-    grid[row][col]='0';
-    q.offer(new int[]{row,col});
-    int[] dirrow={-1,0,1,0};
-    int[] dircol={0,-1,0,1};
-    while(!q.isEmpty()){
-        int[]curr=q.poll();
-        int r=curr[0];
-        int c=curr[1];
-        for(int i=0;i<4;i++){
-            int nr=r+dirrow[i];
-            int nc=c+dircol[i];
-            if(nr>=0 && nr<n && nc>=0 && nc<m && grid[nr][nc]=='1'){
-                grid[nr][nc]='0';
-                q.offer(new  int[]{nr,nc});
-            }
-        }
+   private void dfs(char[][]grid, int r, int c){
+    int row=grid.length;
+    int col=grid[0].length;
+    if(r<0||c<0||r>=row||c>=col){
+        return;
     }
-}
+    if(grid[r][c]=='0'){
+        return;
+    }
+    grid[r][c]='0'; //mark visited
+    dfs(grid,r+1,c);
+    dfs(grid,r,c+1);
+    dfs(grid,r,c-1);
+    dfs(grid,r-1,c);
+   }
 }
 
-
-    
+   
