@@ -24,9 +24,9 @@ class Solution {
             }
             tail=tail.next;
         }
-        if(p1==null) tail.next=p2;
-        if(p2==null) tail.next=p1;
-        return dummy.next;
+            if(p1==null) tail.next= p2;
+            if(p2==null) tail.next= p1;
+            return dummy.next;
     }
 }
 
